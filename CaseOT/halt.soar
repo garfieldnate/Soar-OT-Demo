@@ -1,0 +1,9 @@
+sp {CaseOT*detect*goal*achieved
+   (state <s> ^name CaseOT
+           ^word <word>)
+   (<word> ^subject-case <sc>
+           ^object-case <oc>)
+-->
+   (write (crlf) |Case has been assigned: subject= | <sc> |, object= | <oc>)
+   (halt)
+}

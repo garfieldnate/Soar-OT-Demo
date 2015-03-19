@@ -1,0 +1,10 @@
+pushd elaborations
+source elaborations_source.soar
+popd
+source halt.soar
+source searchControl.soar
+source choose-case.soar
+source getWord.soar
+source initialize-CaseOT.soar
+#get rid of this if you'd rather use numbers than ^worse-than pointers
+#source useNumbers.soar

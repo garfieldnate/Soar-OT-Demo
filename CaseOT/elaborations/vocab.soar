@@ -1,0 +1,39 @@
+#aruku is an intransitive verb (usually; just assume here).
+sp {CaseOT*elaborate*word*aruk
+    (state <s> ^name CaseOT
+               ^word <word>)
+    (<word> ^value aruk)
+-->
+   (<word> ^valency intransitive)
+}
+
+#wakaru is a transitive word that that takes quirky case
+sp {CaseOT*elaborate*word*wakar
+    (state <s> ^name CaseOT
+               ^word <word>)
+    (<word> ^value wakar)
+-->
+   (<word> ^valency transitive
+           ^case quirky)
+}
+
+#korosu is a transitive verb that does not take quirky case
+sp {CaseOT*elaborate*word*koros
+   (state <s> ^name CaseOT
+              ^word <word>)
+   (<word> ^value koros)
+-->
+   (<word> ^valency transitive)
+}
+
+#-e suffix gives possibility interpretation and allows quirky case
+sp {CaseOT*elaborate*word*inflect*e
+    (state <s> ^name CaseOT
+               ^word <word>)
+    (<word> ^next <inflec>)
+    (<inflec> ^value {= e <value>})
+-->
+   (<word> ^inflection <e>)
+   (<word> ^case quirky)
+}
+

@@ -1,0 +1,23 @@
+sp {CaseOT*propose*getWord
+   (state <s> ^name CaseOT
+              ^io.input-link.text <text>
+             -^last-input-number <num>)
+   (<text> ^text-input-number <num>
+           ^next <word>)
+  -(<s> ^word <word>)
+   #(<word> ^value <string>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name getWord
+         ^word <word>)
+}
+
+sp {CaseOT*apply*getWord
+   (state <s> ^name CaseOT
+              ^operator <o>)
+   (<s> ^io.input-link.text.next <word>)
+   (<o> ^name getWord
+         ^word <word> )
+-->
+   (<s> ^word <word>)
+}

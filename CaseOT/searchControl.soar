@@ -1,0 +1,129 @@
+#all of the search-control productions in this file annotate violations on the proposed operators.
+
+
+#faith-lex-special violation happens when a subject is nominative, even though the verb licenses quirky case
+#verb must be transitive
+sp {CaseOT*search-control*choose-case*violations*quirky-case*Faith-Lex-special
+   (state <s> ^name CaseOT
+              ^tableau.constraint <c>
+              ^operator <op> +)
+   (<c> ^name faith-lex-special)
+   (<op> ^name choose-case
+         ^verb <word>
+         ^subject-case nominative  )
+   (<word> ^valency transitive
+                    #or neg, question, etc.
+         ^case quirky)
+-->
+   (<op> ^violation <c>)
+}
+
+#faith-lex-special violation happens when a subject is dative, even though the verb does not license quirky case
+#verb must be transitive
+sp {CaseOT*search-control*choose-case*violations*normal-case*Faith-Lex-special
+   (state <s> ^name CaseOT
+             ^tableau.constraint <c>
+             ^operator <op> +)
+   (<c> ^name faith-lex-special)
+   (<op> ^name choose-case
+         ^verb <word>
+         ^subject-case dative)
+   (<word> -^case quirky
+            ^valency transitive)#or neg, question, etc.
+-->
+   (<op> ^violation <c>)
+}
+
+#faith-lex violation happens when a subject is dative, even though the verb does not license quirky case
+sp {CaseOT*elaborate*choose-case*violations*normal-case*Faith-Lex
+   (state <s> ^name CaseOT
+             ^tableau.constraint <c>
+             ^operator <op> +)
+   (<c> ^name faith-lex)
+   (<op> ^name choose-case
+         ^verb <word>
+         ^subject-case dative)
+   (<word> -^case quirky
+            -^valency transitive)#or neg, question, etc.
+-->
+   (<op> ^violation <c>)
+}
+
+#faith-lex violation happens when a subject is nominative, even though the verb licenses quirky case
+sp {CaseOT*elaborate*choose-case*violations*quirky-case*Faith-Lex
+   (state <s> ^name CaseOT
+              ^tableau.constraint <c>
+              ^operator <op> +)
+   (<c> ^name faith-lex)
+   (<op> ^name choose-case
+         ^verb <word>
+         ^subject-case nominative  )
+   (<word> -^valency transitive
+                    #or neg, question, etc.
+         ^case quirky)
+-->
+   (<op> ^violation <c>)
+}
+
+#mark use of accusative case for a subject
+sp {CaseOT*elaborate*choose-case*violations*accusative
+   (state <s> ^name CaseOT
+              ^tableau.constraint <c>
+              ^operator <op> +)
+   (<c> ^name star-acc)
+   (<op> ^name choose-case
+         #either subject or object, it doesn't matter
+         ^<case> accusative)
+-->
+   (<op> ^violation <c>)
+}
+
+#mark use of dative case
+sp {CaseOT*elaborate*choose-case*violations*dative
+   (state <s> ^name CaseOT
+              ^tableau.constraint <c>
+              ^operator <op> +)
+   (<c> ^name star-dat)
+   (<op> ^name choose-case
+         #either subject or object, it doesn't matter
+         ^<case> dative)
+-->
+   (<op> ^violation <c>)
+}
+
+#mark use of nominative
+sp {CaseOT*elaborate*choose-case*violations*nominative
+   (state <s> ^name CaseOT
+              ^tableau.constraint <c>
+              ^operator <op> +)
+   (<c> ^name star-nom)
+   (<op> ^name choose-case
+         #either subject or object, it doesn't matter
+         ^subject-case nominative)
+-->
+   (<op> ^violation <c>)
+}
+
+#this is the production that executes the OT principles; it fills in the tableau and chooses the best operator
+#it does so by comparing two operators at a time, preferring the one which has a higher violation
+sp {CaseOT*searchControl*tableau*compare*operator
+   (state <s> ^superstate nil
+              ^tableau <t>
+              ^operator <o1> +
+              ^operator {<> <o1> <o2>} +)
+   (<t>   ^constraint <c1>)
+   (<o1> ^name choose-case)
+   (<o2> ^name choose-case)
+   #grab highest tableuax column with with different value for each operator
+   #o1 violates something that o2 doesn't
+   (<o1> ^violation <c1>)
+   (<o2> -^violation <c1>)
+   #o2 doesn't violate something that's worse than what anything o1 violated
+  -{
+   (<o2> ^violation <c2>)
+   (<o1> -^violation <c2>)
+   (<c2> ^worse-than <c1>)
+}
+-->
+   (<s> ^operator <o2> > <o1>)
+}

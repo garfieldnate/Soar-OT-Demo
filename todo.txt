@@ -1,0 +1,2 @@
+Modularize OT logic (make this project reusable)
+Write tests

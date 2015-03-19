@@ -1,0 +1,46 @@
+sp {propose*initialize-CaseOT
+   (state <s> ^superstate nil
+             -^name <any>)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-CaseOT)
+}
+
+#create a heirarchy of violable constraints
+sp {apply*initialize-CaseOT
+   (state <s> ^operator <op>)
+   (<op> ^name initialize-CaseOT)
+-->
+   (<s> ^tableau <t>
+        ^name CaseOT)
+   
+   #"special" is for transitives, negatives, questions, etc.
+   (<t> ^constraint <faith-lex-special>)
+   (<t> ^constraint <*dat>)
+   (<t> ^constraint <faith-lex>)
+   (<t> ^constraint <*acc>)
+   (<t> ^constraint <*nom>)
+   
+   (<faith-lex-special> ^name faith-lex-special)
+   (<*dat> ^name star-dat)
+   (<faith-lex> ^name faith-lex)
+   (<*acc> ^name star-acc)
+   (<*nom> ^name star-nom)
+   
+   #specify the order of markedness for the violation of one
+   #these constraints
+   (<faith-lex-special> ^worse-than <*dat>)
+   (<*dat> ^worse-than <faith-lex>)
+   (<faith-lex> ^worse-than <*acc>)
+   (<*acc> ^worse-than <*nom>)
+}
+
+#elaborate the tableau using transitivity
+sp {elaborate*initialize-caseOT
+    (state <s> ^tableau <t>)
+    (<t> ^constraint <C> ^constraint <B> ^constraint <A>)
+    (<B> ^worse-than <C>)
+    (<A> ^worse-than <B>)
+    -->
+    (<A> ^worse-than <C> +)
+}

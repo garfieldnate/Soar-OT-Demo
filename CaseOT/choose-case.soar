@@ -1,0 +1,51 @@
+#these productions propose all of the possible case combinations for subject and object, dative, nominative, and accusative
+
+#dative subject, nominative object (ni, ga in JP)
+sp {CaseOT*propose*choose-case*dat-subj*nom-obj
+   (state <s> ^name CaseOT
+              ^word <word>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name choose-case
+         ^subject-case dative
+         ^object-case nominative
+         ^verb <word>)
+}
+
+#dative subject, accusative object (ni, wo in JP)
+sp {CaseOT*propose*choose-case*dat-subj*acc-obj
+   (state <s> ^name CaseOT
+              ^word <word>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name choose-case
+         ^subject-case dative
+         ^object-case accusative
+         ^verb <word>)
+}
+
+#nominative subject, accusative object (ga, wo in JP)
+sp {CaseOT*propose*choose-case*nom-subj*acc-obj
+   (state <s> ^name CaseOT
+              ^word <word>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name choose-case
+         ^subject-case nominative
+         ^object-case accusative
+         ^verb <word>)
+}
+
+#select and mark the case for the subject and object
+sp {CaseOT*apply*choose-case
+   (state <s> ^name CaseOT
+              ^word <word>
+              ^operator <op>)
+   (<op> ^name choose-case
+         ^verb <word>
+         ^subject-case <sc>
+         ^object-case <oc>)
+-->
+   (<word> ^subject-case <sc>
+           ^object-case <oc>)
+}

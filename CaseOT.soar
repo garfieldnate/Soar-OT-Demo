@@ -1,0 +1,3 @@
+pushd CaseOT
+source CaseOT_source.soar
+popd
